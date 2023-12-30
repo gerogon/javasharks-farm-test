@@ -1,5 +1,7 @@
 package com.ggonzalez.farmtest;
 
+import com.ggonzalez.farmtest.entity.Chicken;
+import com.ggonzalez.farmtest.entity.Egg;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +34,9 @@ public class FarmRestController {
     @PutMapping("/days") // endpoint?
     public void advanceOneDay(){
         chickenService.advanceOneDay();
-        //eggService.advanceOneDay();
+        eggService.advanceOneDay();
+        /*
+        chickenService.layEggs();
+        eggService.turnIntoChickens(); */
     }
 }

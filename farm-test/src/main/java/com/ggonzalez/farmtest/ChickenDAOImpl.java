@@ -1,5 +1,6 @@
 package com.ggonzalez.farmtest;
 
+import com.ggonzalez.farmtest.entity.Chicken;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;

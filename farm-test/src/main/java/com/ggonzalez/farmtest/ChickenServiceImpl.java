@@ -1,5 +1,6 @@
 package com.ggonzalez.farmtest;
 
+import com.ggonzalez.farmtest.entity.Chicken;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
