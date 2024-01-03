@@ -37,4 +37,8 @@ public class Egg {
     public void setDays(int days) {
         this.days = days;
     }
+
+    public void incrementDays(){ // public?
+        this.days ++;
+    }
 }

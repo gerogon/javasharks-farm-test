@@ -21,4 +21,13 @@ public class Farm {
     @OneToMany(mappedBy = "farm" /*, cascade */)
     private List<Egg> eggs;
 
+    public Farm(){}
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void substractMoney(int anAmountOfMoney){
+        this.money = money - anAmountOfMoney;
+    }
 }

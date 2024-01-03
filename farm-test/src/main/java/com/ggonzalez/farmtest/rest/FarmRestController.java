@@ -1,7 +1,9 @@
-package com.ggonzalez.farmtest;
+package com.ggonzalez.farmtest.rest;
 
 import com.ggonzalez.farmtest.entity.Chicken;
 import com.ggonzalez.farmtest.entity.Egg;
+import com.ggonzalez.farmtest.entity.Farm;
+import com.ggonzalez.farmtest.service.FarmService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,33 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FarmRestController {
 
-    private ChickenService chickenService;
-    private EggService eggService;
+    private FarmService farmService;
 
-    // private money; ????????????
-
-    public FarmRestController(ChickenService aChickenService, EggService anEggService){
-        chickenService = aChickenService;
-        eggService = anEggService;
-        // money = 100; ?????????
+    public FarmRestController(FarmService aFarmService){
+        farmService = aFarmService;
     }
 
     @PostMapping("/chickens")
     public Chicken buyChicken(@RequestBody Chicken aChicken){
-        return chickenService.save(aChicken);
+        return farmService.buyChicken(aChicken);
     }
 
     @PostMapping("/eggs")
     public Egg buyEgg(@RequestBody Egg anEgg){
-        return eggService.save(anEgg);
+        return farmService.buyEgg(anEgg);
     }
 
     @PutMapping("/days") // endpoint?
     public void advanceOneDay(){
-        chickenService.advanceOneDay();
-        eggService.advanceOneDay();
-        /*
-        chickenService.layEggs();
-        eggService.turnIntoChickens(); */
+        farmService.advanceOneDay();
     }
 }
