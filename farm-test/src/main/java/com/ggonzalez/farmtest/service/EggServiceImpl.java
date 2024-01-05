@@ -1,5 +1,6 @@
 package com.ggonzalez.farmtest.service;
 
+import com.ggonzalez.farmtest.entity.Chicken;
 import com.ggonzalez.farmtest.repository.EggRepository;
 import com.ggonzalez.farmtest.entity.Egg;
 import jakarta.transaction.Transactional;
@@ -47,5 +48,16 @@ public class EggServiceImpl implements EggService {
             Egg newEgg = new Egg();
             eggRepository.save(newEgg);
         }
+    }
+
+    @Override
+    public long countEggs() {
+        return eggRepository.count();
+    }
+
+    @Override
+    public void removeEgg() {
+        Egg eggToRemove =  eggRepository.findFirstByOrderByIdDesc();
+        eggRepository.delete(eggToRemove);
     }
 }

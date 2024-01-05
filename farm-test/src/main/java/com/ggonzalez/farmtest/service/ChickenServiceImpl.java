@@ -52,4 +52,15 @@ public class ChickenServiceImpl implements ChickenService {
             chickenRepository.save(newChicken);
         }
     }
+
+    @Override
+    public long countChickens() {
+        return chickenRepository.count();
+    }
+
+    @Override
+    public void removeChicken() {
+        Chicken chickenToRemove =  chickenRepository.findFirstByOrderByIdDesc();
+        chickenRepository.delete(chickenToRemove);
+    }
 }

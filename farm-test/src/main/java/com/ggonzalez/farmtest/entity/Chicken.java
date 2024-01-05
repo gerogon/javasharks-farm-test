@@ -14,7 +14,6 @@ public class Chicken {
     @Column(name = "days_of_life")
     private int days;
 
-
     @ManyToOne /* (CascadeType) */
     @JoinColumn(name="farm_id")
     private Farm farm;
@@ -40,7 +39,7 @@ public class Chicken {
         this.days = days;
     }
 
-    public void incrementDays(){ // public?
+    public void incrementDays() { // public?
         this.days ++;
     }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ChickenRepository extends JpaRepository<Chicken, Integer> {
     List<Chicken> findByDays(int days);
+    Chicken findFirstByOrderByIdDesc();
 }

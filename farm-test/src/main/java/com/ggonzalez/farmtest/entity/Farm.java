@@ -27,6 +27,10 @@ public class Farm {
         return money;
     }
 
+    public void addMoney(int anAmountOfMoney){
+        this.money = money + anAmountOfMoney;
+    }
+
     public void substractMoney(int anAmountOfMoney){
         this.money = money - anAmountOfMoney;
     }

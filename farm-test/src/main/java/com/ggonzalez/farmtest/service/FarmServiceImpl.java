@@ -28,6 +28,13 @@ public class FarmServiceImpl implements FarmService{
     }
 
     @Override
+    public void addMoney(int anAmountOfMoney) {
+        Farm farm = farmRepository.findById(1).get(); // ?? Optional <>
+        farm.addMoney(anAmountOfMoney);
+        farmRepository.save(farm);
+    }
+
+    @Override
     public void substractMoney(int anAmountOfMoney) {
         Farm farm = farmRepository.findById(1).get(); // ?? Optional <>
         farm.substractMoney(anAmountOfMoney);
@@ -54,6 +61,24 @@ public class FarmServiceImpl implements FarmService{
             return this.saveEgg(anEgg); // idem saveChicken()
         }
         return null;
+    }
+
+    @Override
+    public void sellChicken() {
+        if (chickenService.countChickens() == 0){
+            // exception
+        }
+        this.addMoney(15); // chicken_value = 15
+        chickenService.removeChicken();
+    }
+
+    @Override
+    public void sellEgg() {
+        if (eggService.countEggs() == 0){
+            // exception
+        }
+        this.addMoney(5); // egg_value = 5
+        eggService.removeEgg();
     }
 
     public Chicken saveChicken(Chicken aChicken){
