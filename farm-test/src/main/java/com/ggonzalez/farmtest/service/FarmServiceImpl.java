@@ -35,6 +35,16 @@ public class FarmServiceImpl implements FarmService{
     }
 
     @Override
+    public long eggStock() {
+        return eggService.countEggs();
+    }
+
+    @Override
+    public long chickenStock() {
+        return chickenService.countChickens();
+    }
+
+    @Override
     public void substractMoney(int anAmountOfMoney) {
         Farm farm = farmRepository.findById(1).get(); // ?? Optional <>
         farm.substractMoney(anAmountOfMoney);
@@ -43,51 +53,37 @@ public class FarmServiceImpl implements FarmService{
 
     @Override
     public Chicken buyChicken(Chicken aChicken) {
-        int money = this.moneyAvailable();
         int chickenValue = 15;
-        if (money >= chickenValue) {
-            this.substractMoney(chickenValue);
-            return this.saveChicken(aChicken); // otra opcion: directamente chickenService.save(aChicken) y sacar el método save de farmService (hasta ahora no debería usarse este método desde el controller)
-        }
-        return null;
+        this.substractMoney(chickenValue);
+        return chickenService.save(aChicken);
     }
 
     @Override
     public Egg buyEgg(Egg anEgg) {
-        int money = this.moneyAvailable();
         int eggValue = 5;
-        if (money >= eggValue) {
-            this.substractMoney(eggValue);
-            return this.saveEgg(anEgg); // idem saveChicken()
-        }
-        return null;
+        this.substractMoney(eggValue);
+        return eggService.save(anEgg);
     }
 
     @Override
     public void sellChicken() {
-        if (chickenService.countChickens() == 0){
-            // exception
-        }
         this.addMoney(15); // chicken_value = 15
         chickenService.removeChicken();
     }
 
     @Override
     public void sellEgg() {
-        if (eggService.countEggs() == 0){
-            // exception
-        }
         this.addMoney(5); // egg_value = 5
         eggService.removeEgg();
     }
-
+/*
     public Chicken saveChicken(Chicken aChicken){
         return chickenService.save(aChicken);
     }
 
     public Egg saveEgg(Egg anEgg){
         return eggService.save(anEgg);
-    }
+    }*/
 
     @Override
     public void advanceOneDay() {
@@ -100,5 +96,7 @@ public class FarmServiceImpl implements FarmService{
 
         chickenService.addChickens(newChickens);
         eggService.addEggs(newEggs);
+
+        // informar cantidad de huevos y gallinas descartados
     }
 }
