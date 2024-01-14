@@ -4,16 +4,24 @@ import com.ggonzalez.farmtest.entity.Chicken;
 import com.ggonzalez.farmtest.entity.Egg;
 
 public interface FarmService {
-    int moneyAvailable();
-    void substractMoney(int anAmountOfMoney);
-    void addMoney(int anAmountOfMoney);
+    int createFarm(int money, int eggLimit, int chickenLimit, int eggValue, int chickenValue);
+    int moneyAvailable(int farmId);
+    void substractMoney(int farmId, int anAmountOfMoney);
+    void addMoney(int farmId, int anAmountOfMoney);
+    int chickenPrice(int farmId);
+    int eggPrice(int farmId);
+    int chickenCapacity(int farmId);
+    int eggCapacity(int farmId);
+
     long eggStock();
     long chickenStock();
-    Chicken buyChicken(Chicken aChicken);
-    Egg buyEgg(Egg anEgg);
-    void sellChicken();
-    void sellEgg();
-    //Chicken saveChicken(Chicken aChicken);
-    //Egg saveEgg(Egg anEgg);
-    void advanceOneDay();
+    Chicken buyChicken(int farmId);
+    Egg buyEgg(int farmId);
+    void sellChicken(int farmId);
+    void sellEgg(int farmId);
+    void advanceOneDay(int farmId);
+
+    void addChickens(int farmId, int anAmountOfChickens);
+
+    void addEggs(int farmId, int anAmountOfEggs);
 }

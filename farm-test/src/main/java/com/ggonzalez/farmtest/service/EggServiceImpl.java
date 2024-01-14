@@ -43,14 +43,6 @@ public class EggServiceImpl implements EggService {
     }
 
     @Override
-    public void addEggs(int anAmountOfEggs) {
-        for (int i = 0; i < anAmountOfEggs; i++){
-            Egg newEgg = new Egg();
-            eggRepository.save(newEgg);
-        }
-    }
-
-    @Override
     public long countEggs() {
         return eggRepository.count();
     }

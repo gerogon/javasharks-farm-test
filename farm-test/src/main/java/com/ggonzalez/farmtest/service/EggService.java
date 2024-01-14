@@ -6,7 +6,6 @@ public interface EggService {
     Egg save(Egg anEgg);
     void incrementOneDayOfLife();
     int turnOldEggsIntoChickens();
-    void addEggs(int anAmountOfEggs);
     long countEggs();
     void removeEgg();
 }

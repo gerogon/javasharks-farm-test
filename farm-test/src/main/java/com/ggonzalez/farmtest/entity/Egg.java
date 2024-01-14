@@ -22,6 +22,11 @@ public class Egg {
         this.days = 0;
     }
 
+    public Egg(Farm aFarm){
+        this.days = 0;
+        this.farm = aFarm;
+    }
+
     public int getId() {
         return id;
     }

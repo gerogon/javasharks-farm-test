@@ -46,14 +46,6 @@ public class ChickenServiceImpl implements ChickenService {
     }
 
     @Override
-    public void addChickens(int anAmountOfChickens) {
-        for (int i = 0; i < anAmountOfChickens; i++){
-            Chicken newChicken = new Chicken();
-            chickenRepository.save(newChicken);
-        }
-    }
-
-    @Override
     public long countChickens() {
         return chickenRepository.count();
     }

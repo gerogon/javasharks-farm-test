@@ -22,16 +22,54 @@ public class FarmServiceImpl implements FarmService{
     }
 
     @Override
-    public int moneyAvailable() {
-        Farm farm = farmRepository.findById(1).get(); // ?? Optional <>
+    public int createFarm(int money, int eggLimit, int chickenLimit, int eggValue, int chickenValue) {
+        Farm farm = new Farm(money, eggLimit, chickenLimit, eggValue, chickenValue);
+        farmRepository.save(farm);
+        return farm.getId();
+    }
+
+    @Override
+    public int moneyAvailable(int farmId) {
+        Farm farm = farmRepository.findById(farmId).get();
         return farm.getMoney();
     }
 
     @Override
-    public void addMoney(int anAmountOfMoney) {
-        Farm farm = farmRepository.findById(1).get(); // ?? Optional <>
+    public void addMoney(int farmId, int anAmountOfMoney) {
+        Farm farm = farmRepository.findById(farmId).get();
         farm.addMoney(anAmountOfMoney);
         farmRepository.save(farm);
+    }
+
+    @Override
+    public void substractMoney(int farmId, int anAmountOfMoney) {
+        Farm farm = farmRepository.findById(farmId).get();
+        farm.substractMoney(anAmountOfMoney);
+        farmRepository.save(farm);
+    }
+
+    @Override
+    public int chickenPrice(int farmId) {
+        Farm farm = farmRepository.findById(farmId).get();
+        return farm.getChickenPrice();
+    }
+
+    @Override
+    public int eggPrice(int farmId) {
+        Farm farm = farmRepository.findById(farmId).get();
+        return farm.getEggPrice();
+    }
+
+    @Override
+    public int chickenCapacity(int farmId) {
+        Farm farm = farmRepository.findById(farmId).get();
+        return farm.getChickenCapacity();
+    }
+
+    @Override
+    public int eggCapacity(int farmId) {
+        Farm farm = farmRepository.findById(farmId).get();
+        return farm.getEggCapacity();
     }
 
     @Override
@@ -45,48 +83,41 @@ public class FarmServiceImpl implements FarmService{
     }
 
     @Override
-    public void substractMoney(int anAmountOfMoney) {
-        Farm farm = farmRepository.findById(1).get(); // ?? Optional <>
-        farm.substractMoney(anAmountOfMoney);
-        farmRepository.save(farm);
+    public Chicken buyChicken(int farmId) {
+        Farm farm = farmRepository.findById(farmId).get();
+        Chicken newChicken = new Chicken(farm);
+
+        this.substractMoney(farmId, farm.getChickenPrice());
+        return chickenService.save(newChicken);
     }
 
     @Override
-    public Chicken buyChicken(Chicken aChicken) {
-        int chickenValue = 15;
-        this.substractMoney(chickenValue);
-        return chickenService.save(aChicken);
+    public Egg buyEgg(int farmId) {
+        Farm farm = farmRepository.findById(farmId).get();
+        Egg newEgg = new Egg(farm);
+
+        this.substractMoney(farmId, farm.getEggPrice());
+        return eggService.save(newEgg);
     }
 
     @Override
-    public Egg buyEgg(Egg anEgg) {
-        int eggValue = 5;
-        this.substractMoney(eggValue);
-        return eggService.save(anEgg);
-    }
+    public void sellChicken(int farmId) {
+        int chickenPrice = farmRepository.findById(farmId).get().getChickenPrice();
 
-    @Override
-    public void sellChicken() {
-        this.addMoney(15); // chicken_value = 15
+        this.addMoney(farmId, chickenPrice);
         chickenService.removeChicken();
     }
 
     @Override
-    public void sellEgg() {
-        this.addMoney(5); // egg_value = 5
+    public void sellEgg(int farmId) {
+        int eggPrice = farmRepository.findById(farmId).get().getEggPrice();
+
+        this.addMoney(farmId, eggPrice);
         eggService.removeEgg();
     }
-/*
-    public Chicken saveChicken(Chicken aChicken){
-        return chickenService.save(aChicken);
-    }
-
-    public Egg saveEgg(Egg anEgg){
-        return eggService.save(anEgg);
-    }*/
 
     @Override
-    public void advanceOneDay() {
+    public void advanceOneDay(int farmId) {
         chickenService.incrementOneDayOfLife();
         eggService.incrementOneDayOfLife();
 
@@ -94,9 +125,27 @@ public class FarmServiceImpl implements FarmService{
         int newEggs = chickenService.eggsToAdd();
         int newChickens = eggService.turnOldEggsIntoChickens();
 
-        chickenService.addChickens(newChickens);
-        eggService.addEggs(newEggs);
+        this.addChickens(farmId, newChickens);
+        this.addEggs(farmId, newEggs);
 
         // informar cantidad de huevos y gallinas descartados
+    }
+
+    @Override
+    public void addChickens(int farmId, int anAmountOfChickens) {
+        Farm farm = farmRepository.findById(farmId).get();
+        for (int i = 0; i < anAmountOfChickens; i++){
+            Chicken newChicken = new Chicken(farm);
+            chickenService.save(newChicken);
+        }
+    }
+
+    @Override
+    public void addEggs(int farmId, int anAmountOfEggs) {
+        Farm farm = farmRepository.findById(farmId).get();
+        for (int i = 0; i < anAmountOfEggs; i++){
+            Egg newEgg = new Egg(farm);
+            eggService.save(newEgg);
+        }
     }
 }

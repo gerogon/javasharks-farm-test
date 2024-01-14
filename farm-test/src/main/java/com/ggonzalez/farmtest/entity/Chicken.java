@@ -18,9 +18,13 @@ public class Chicken {
     @JoinColumn(name="farm_id")
     private Farm farm;
 
-
     public Chicken(){
         this.days = 0;
+    }
+
+    public Chicken(Farm aFarm){
+        this.days = 0;
+        this.farm = aFarm;
     }
 
     public int getId() {
