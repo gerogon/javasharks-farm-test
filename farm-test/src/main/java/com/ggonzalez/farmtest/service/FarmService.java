@@ -24,4 +24,8 @@ public interface FarmService {
     void addChickens(int farmId, int anAmountOfChickens);
 
     void addEggs(int farmId, int anAmountOfEggs);
+
+    int chickensToDieOnTheNextDay();
+    int eggsToBeLaidOnTheNextDay();
+    int eggsToBeBrokenOnTheNextDay();
 }

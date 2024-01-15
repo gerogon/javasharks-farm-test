@@ -52,4 +52,11 @@ public class EggServiceImpl implements EggService {
         Egg eggToRemove =  eggRepository.findFirstByOrderByIdDesc();
         eggRepository.delete(eggToRemove);
     }
+
+    @Override
+    public int eggsToBeBrokenOnTheNextDay() {
+        return eggRepository.findByDays(2).size();
+    }
+
+
 }

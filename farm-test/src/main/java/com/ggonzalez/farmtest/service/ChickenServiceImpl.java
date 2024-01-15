@@ -55,4 +55,15 @@ public class ChickenServiceImpl implements ChickenService {
         Chicken chickenToRemove =  chickenRepository.findFirstByOrderByIdDesc();
         chickenRepository.delete(chickenToRemove);
     }
+
+    @Override
+    public int chickensToDieOnTheNextDay() {
+        return chickenRepository.findByDays(2).size();
+    }
+
+    @Override
+    public int eggsToBeLaidOnTheNextDay(){
+        return chickenRepository.findByDays(1).size() * 2;
+    }
+
 }

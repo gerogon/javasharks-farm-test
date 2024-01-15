@@ -2,6 +2,7 @@ package com.ggonzalez.farmtest.rest;
 
 import com.ggonzalez.farmtest.entity.Chicken;
 import com.ggonzalez.farmtest.entity.Egg;
+import com.ggonzalez.farmtest.entity.FarmStatusReport;
 import com.ggonzalez.farmtest.exception.FarmException;
 import com.ggonzalez.farmtest.service.FarmService;
 import org.springframework.web.bind.annotation.*;
@@ -58,5 +59,19 @@ public class FarmRestController {
     @PutMapping("/days")
     public void advanceOneDay(){
         farmService.advanceOneDay(farmId);
+    }
+
+    @GetMapping("/statusReport")
+    public FarmStatusReport getStatusReport(){
+        int money = farmService.moneyAvailable(farmId);
+        long chickens = farmService.chickenStock();
+        long eggs = farmService.eggStock();
+        int chickensToDieOnTheNextDay = farmService.chickensToDieOnTheNextDay();
+        int eggsToBeBrokenOnTheNextDay = farmService.eggsToBeBrokenOnTheNextDay();
+        int eggsToBeLaidOnTheNextDay = farmService.eggsToBeLaidOnTheNextDay();
+
+        FarmStatusReport status = new FarmStatusReport(money, chickens, eggs, chickensToDieOnTheNextDay,
+                                    eggsToBeBrokenOnTheNextDay, eggsToBeLaidOnTheNextDay);
+        return status;
     }
 }

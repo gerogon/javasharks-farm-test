@@ -9,5 +9,6 @@ public interface ChickenService {
     int eggsToAdd();
     long countChickens();
     void removeChicken();
-
+    int chickensToDieOnTheNextDay();
+    int eggsToBeLaidOnTheNextDay();
 }

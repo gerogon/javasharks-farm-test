@@ -8,4 +8,5 @@ public interface EggService {
     int turnOldEggsIntoChickens();
     long countEggs();
     void removeEgg();
+    int eggsToBeBrokenOnTheNextDay();
 }

@@ -148,4 +148,18 @@ public class FarmServiceImpl implements FarmService{
             eggService.save(newEgg);
         }
     }
+
+    @Override
+    public int chickensToDieOnTheNextDay(){
+        return chickenService.chickensToDieOnTheNextDay();
+    }
+
+    @Override
+    public int eggsToBeLaidOnTheNextDay(){
+        return chickenService.eggsToBeLaidOnTheNextDay();
+    }
+    @Override
+    public int eggsToBeBrokenOnTheNextDay(){
+        return eggService.eggsToBeBrokenOnTheNextDay();
+    }
 }
