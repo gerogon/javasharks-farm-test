@@ -26,6 +26,12 @@ public class FarmRestController {
             throw new FarmException("You don't have enough money to buy a chicken! You need $" + chickenValue + " but only have $" + moneyAvailable);
         }
 
+        long chickensInFarm = farmService.chickenStock();
+        int chickenCapacity = farmService.chickenCapacity(farmId);
+        if (chickensInFarm == chickenCapacity) {
+            throw new FarmException("You can't buy any more chickens, the farm has reached the limit!");
+        }
+
         return farmService.buyChicken(farmId);
     }
 
@@ -35,6 +41,12 @@ public class FarmRestController {
         int eggValue = farmService.eggPrice(farmId);
         if (moneyAvailable < eggValue) {
             throw new FarmException("You don't have enough money to buy an egg! You need $" + eggValue + " but only have $" + moneyAvailable);
+        }
+
+        long eggsInFarm = farmService.eggStock();
+        int eggCapacity = farmService.eggCapacity(farmId);
+        if (eggsInFarm == eggCapacity) {
+            throw new FarmException("You can't buy any more eggs, the farm has reached the limit!");
         }
 
         return farmService.buyEgg(farmId);
