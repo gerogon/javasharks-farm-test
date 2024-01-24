@@ -125,6 +125,8 @@ public class FarmServiceImpl implements FarmService{
         int newEggs = chickenService.eggsToAdd();
         int newChickens = eggService.turnOldEggsIntoChickens();
 
+        // cantidadOk = min(newChickens, tope - stock actual)
+
         this.addChickens(farmId, newChickens);
         this.addEggs(farmId, newEggs);
 

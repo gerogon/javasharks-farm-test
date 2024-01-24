@@ -5,9 +5,11 @@ import com.ggonzalez.farmtest.entity.Egg;
 import com.ggonzalez.farmtest.entity.FarmStatusReport;
 import com.ggonzalez.farmtest.exception.FarmException;
 import com.ggonzalez.farmtest.service.FarmService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 public class FarmRestController {
 
     private FarmService farmService;
@@ -15,11 +17,26 @@ public class FarmRestController {
 
     public FarmRestController(FarmService aFarmService){
         farmService = aFarmService;
+    }
+
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
+
+    @PostMapping("/farm")
+    public String createFarm(){
         farmId = farmService.createFarm(100, 20, 10, 5, 15);
+        return "farm";
+    }
+
+    @GetMapping("/farm")
+    public String farm(){
+        return "farm";
     }
 
     @PostMapping("/chickens")
-    public Chicken buyChicken(){
+    public String buyChicken(){
         int moneyAvailable = farmService.moneyAvailable(farmId);
         int chickenValue = farmService.chickenPrice(farmId);
         if (moneyAvailable < chickenValue) {
@@ -32,11 +49,12 @@ public class FarmRestController {
             throw new FarmException("You can't buy any more chickens, the farm has reached the limit!");
         }
 
-        return farmService.buyChicken(farmId);
+        farmService.buyChicken(farmId);
+        return "chickens";
     }
 
     @PostMapping("/eggs")
-    public Egg buyEgg(){
+    public String buyEgg() {
         int moneyAvailable = farmService.moneyAvailable(farmId);
         int eggValue = farmService.eggPrice(farmId);
         if (moneyAvailable < eggValue) {
@@ -49,32 +67,36 @@ public class FarmRestController {
             throw new FarmException("You can't buy any more eggs, the farm has reached the limit!");
         }
 
-        return farmService.buyEgg(farmId);
+        farmService.buyEgg(farmId);
+        return "eggs";
     }
 
     @DeleteMapping("/chickens")
-    public void sellChicken(){
+    public String sellChicken(){
         if (farmService.chickenStock() == 0) {
             throw new FarmException("You don't have any chickens to sell!");
         }
         farmService.sellChicken(farmId);
+        return "chickens";
     }
 
     @DeleteMapping("/eggs")
-    public void sellEgg(){
+    public String sellEgg(){
         if (farmService.eggStock() == 0) {
             throw new FarmException("You don't have any eggs to sell!");
         }
         farmService.sellEgg(farmId);
+        return "eggs";
     }
 
     @PutMapping("/days")
-    public void advanceOneDay(){
+    public String advanceOneDay(){
         farmService.advanceOneDay(farmId);
+        return "days";
     }
 
     @GetMapping("/statusReport")
-    public FarmStatusReport getStatusReport(){
+    public String getStatusReport(Model model){
         int money = farmService.moneyAvailable(farmId);
         long chickens = farmService.chickenStock();
         long eggs = farmService.eggStock();
@@ -84,6 +106,8 @@ public class FarmRestController {
 
         FarmStatusReport status = new FarmStatusReport(money, chickens, eggs, chickensToDieOnTheNextDay,
                                     eggsToBeBrokenOnTheNextDay, eggsToBeLaidOnTheNextDay);
-        return status;
+        model.addAttribute("status", status);
+
+        return "statusReport";
     }
 }

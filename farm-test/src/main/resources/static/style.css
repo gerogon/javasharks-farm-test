@@ -1,0 +1,72 @@
+.buttons{
+    position: relative;
+    height: 140px;
+    width: 500px;
+    /*border: black solid 5px;*/
+    margin: 0 auto;
+    margin-top: 60px;
+}
+
+.report {
+     margin-left: 400px;
+     margin-top: 60px;
+}
+
+#first{
+    position: absolute;
+    margin:10px;
+}
+
+#second{
+    position: absolute;
+    margin-top:65px;
+    margin-left:10px;
+}
+
+#third{
+    position: absolute;
+    margin-top: 10px;
+    margin-left:160px;
+}
+
+#fourth{
+    position: absolute;
+    margin-left:160px;
+    margin-top:65px;
+}
+
+#fifth{
+    position: absolute;
+    margin-top: 10px;
+    margin-left:320px;
+}
+
+#sixth{
+    position: absolute;
+    margin-left:300px;
+    margin-top:65px;
+}
+
+#index_button {
+    margin-top: 30px;
+    margin-left:550px;
+}
+
+#back_button {
+    margin-top: 30px;
+    margin-left:550px;
+}
+h1 {
+    text-align: center;
+    padding-top: 30px;
+}
+
+h2 {
+    text-align: center;
+    padding-top: 20px;
+}
+
+#farm_info{
+     margin-left: 400px;
+     margin-top: 20px;
+}
