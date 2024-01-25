@@ -48,6 +48,20 @@
     </div>
 </div>
 
+<div class="status_messages">
+    <div th:if="${timePassingMessage}">
+        <p th:text="${timePassingMessage}"></p>
+    </div>
+    <div th:if="${success_message}">
+        <p th:text="${success_message}"></p>
+    </div>
+<div th:if="${error_message}">
+    <p th:text="${error_message}"></p>
+</div>
+</div>
+
+
+
 <h2> You should know: </h2>
 <div id="farm_info">
     <ul>

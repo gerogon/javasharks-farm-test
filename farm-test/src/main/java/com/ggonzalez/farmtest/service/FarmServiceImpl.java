@@ -7,6 +7,9 @@ import com.ggonzalez.farmtest.entity.Farm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class FarmServiceImpl implements FarmService{
 
@@ -117,7 +120,10 @@ public class FarmServiceImpl implements FarmService{
     }
 
     @Override
-    public void advanceOneDay(int farmId) {
+    public Map<String, Integer> advanceOneDay(int farmId) {
+
+        Map<String, Integer> excess = new HashMap<>();
+
         chickenService.incrementOneDayOfLife();
         eggService.incrementOneDayOfLife();
 
@@ -125,12 +131,16 @@ public class FarmServiceImpl implements FarmService{
         int newEggs = chickenService.eggsToAdd();
         int newChickens = eggService.turnOldEggsIntoChickens();
 
-        // cantidadOk = min(newChickens, tope - stock actual)
+        int validAmountOfChickensToAdd = (int) Math.min(newChickens, this.chickenCapacity(farmId) - this.chickenStock());
+        int validAmountOfEggsToAdd = (int) Math.min(newEggs, this.eggCapacity(farmId) - this.eggStock());
 
-        this.addChickens(farmId, newChickens);
-        this.addEggs(farmId, newEggs);
+        this.addChickens(farmId, validAmountOfChickensToAdd);
+        this.addEggs(farmId, validAmountOfEggsToAdd);
 
-        // informar cantidad de huevos y gallinas descartados
+        excess.put("chickens", newChickens - validAmountOfChickensToAdd);
+        excess.put("eggs", newEggs - validAmountOfEggsToAdd);
+
+        return excess;
     }
 
     @Override

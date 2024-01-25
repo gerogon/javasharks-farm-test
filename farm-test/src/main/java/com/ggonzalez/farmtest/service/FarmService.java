@@ -3,6 +3,8 @@ package com.ggonzalez.farmtest.service;
 import com.ggonzalez.farmtest.entity.Chicken;
 import com.ggonzalez.farmtest.entity.Egg;
 
+import java.util.Map;
+
 public interface FarmService {
     int createFarm(int money, int eggLimit, int chickenLimit, int eggValue, int chickenValue);
     int moneyAvailable(int farmId);
@@ -19,8 +21,7 @@ public interface FarmService {
     Egg buyEgg(int farmId);
     void sellChicken(int farmId);
     void sellEgg(int farmId);
-    void advanceOneDay(int farmId);
-
+    Map<String, Integer> advanceOneDay(int farmId);
     void addChickens(int farmId, int anAmountOfChickens);
 
     void addEggs(int farmId, int anAmountOfEggs);
