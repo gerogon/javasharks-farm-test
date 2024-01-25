@@ -30,8 +30,12 @@ public class FarmRestController {
     }
 
     @PostMapping("/farm")
-    public String createFarm(){
+    public String createFarm(Model model){
+        if (farmId == 0){
         farmId = farmService.createFarm(100, 20, 10, 5, 15);
+        } else {
+            model.addAttribute("error_message", "You already created the farm!");
+        }
         return "farm";
     }
 
