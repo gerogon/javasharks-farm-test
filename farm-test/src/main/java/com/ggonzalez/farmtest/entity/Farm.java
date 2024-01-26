@@ -28,10 +28,10 @@ public class Farm {
     @Column(name = "chicken_price")
     private int chickenPrice;
 
-    @OneToMany(mappedBy = "farm" /*, cascade*/)
+    @OneToMany(mappedBy = "farm")
     private List<Chicken> chickens;
 
-    @OneToMany(mappedBy = "farm" /*, cascade */)
+    @OneToMany(mappedBy = "farm")
     private List<Egg> eggs;
 
     public Farm(){}

@@ -14,7 +14,7 @@ public class Egg {
     @Column(name = "days_of_life")
     private int days;
 
-    @ManyToOne /* (CascadeType) */
+    @ManyToOne
     @JoinColumn(name="farm_id")
     private Farm farm;
 
