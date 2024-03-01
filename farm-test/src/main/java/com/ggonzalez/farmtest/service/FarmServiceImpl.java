@@ -1,5 +1,6 @@
 package com.ggonzalez.farmtest.service;
 
+import com.ggonzalez.farmtest.exception.FarmException;
 import com.ggonzalez.farmtest.repository.FarmRepository;
 import com.ggonzalez.farmtest.entity.Chicken;
 import com.ggonzalez.farmtest.entity.Egg;
@@ -87,6 +88,16 @@ public class FarmServiceImpl implements FarmService{
 
     @Override
     public Chicken buyChicken(int farmId) {
+        int moneyAvailable = this.moneyAvailable(farmId);
+        int chickenValue = this.chickenPrice(farmId);
+        if (moneyAvailable < chickenValue) {
+            throw new FarmException("You don't have enough money to buy a chicken! You need $" + chickenValue + " but only have $" + moneyAvailable);
+        }
+        long chickensInFarm = this.chickenStock();
+        int chickenCapacity = this.chickenCapacity(farmId);
+        if (chickensInFarm == chickenCapacity) {
+            throw new FarmException("You can't buy any more chickens, the farm has reached the limit!");
+        }
         Farm farm = farmRepository.findById(farmId).get();
         Chicken newChicken = new Chicken(farm);
 
@@ -96,6 +107,18 @@ public class FarmServiceImpl implements FarmService{
 
     @Override
     public Egg buyEgg(int farmId) {
+        int moneyAvailable = this.moneyAvailable(farmId);
+        int eggValue = this.eggPrice(farmId);
+        if (moneyAvailable < eggValue) {
+            throw new FarmException("You don't have enough money to buy an egg! You need $" + eggValue + " but only have $" + moneyAvailable);
+        }
+
+        long eggsInFarm = this.eggStock();
+        int eggCapacity = this.eggCapacity(farmId);
+        if (eggsInFarm == eggCapacity) {
+            throw new FarmException("You can't buy any more eggs, the farm has reached the limit!");
+        }
+
         Farm farm = farmRepository.findById(farmId).get();
         Egg newEgg = new Egg(farm);
 
@@ -105,6 +128,9 @@ public class FarmServiceImpl implements FarmService{
 
     @Override
     public void sellChicken(int farmId) {
+        if (this.chickenStock() == 0) {
+            throw new FarmException("You don't have any chickens to sell!");
+        }
         int chickenPrice = farmRepository.findById(farmId).get().getChickenPrice();
 
         this.addMoney(farmId, chickenPrice);
@@ -113,6 +139,9 @@ public class FarmServiceImpl implements FarmService{
 
     @Override
     public void sellEgg(int farmId) {
+        if (this.eggStock() == 0) {
+            throw new FarmException("You don't have any eggs to sell!");
+        }
         int eggPrice = farmRepository.findById(farmId).get().getEggPrice();
 
         this.addMoney(farmId, eggPrice);

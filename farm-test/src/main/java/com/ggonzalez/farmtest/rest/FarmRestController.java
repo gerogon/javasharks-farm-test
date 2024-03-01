@@ -47,16 +47,6 @@ public class FarmRestController {
     @PostMapping("/chickens")
     public String buyChicken(Model model){
         try {
-            int moneyAvailable = farmService.moneyAvailable(farmId);
-            int chickenValue = farmService.chickenPrice(farmId);
-            if (moneyAvailable < chickenValue) {
-                throw new FarmException("You don't have enough money to buy a chicken! You need $" + chickenValue + " but only have $" + moneyAvailable);
-            }
-            long chickensInFarm = farmService.chickenStock();
-            int chickenCapacity = farmService.chickenCapacity(farmId);
-            if (chickensInFarm == chickenCapacity) {
-                throw new FarmException("You can't buy any more chickens, the farm has reached the limit!");
-            }
             farmService.buyChicken(farmId);
             model.addAttribute("success_message", "You just bought a chicken!");
         } catch (FarmException exc) {
@@ -68,18 +58,6 @@ public class FarmRestController {
     @PostMapping("/eggs")
     public String buyEgg(Model model) {
         try{
-            int moneyAvailable = farmService.moneyAvailable(farmId);
-            int eggValue = farmService.eggPrice(farmId);
-            if (moneyAvailable < eggValue) {
-                throw new FarmException("You don't have enough money to buy an egg! You need $" + eggValue + " but only have $" + moneyAvailable);
-            }
-
-            long eggsInFarm = farmService.eggStock();
-            int eggCapacity = farmService.eggCapacity(farmId);
-            if (eggsInFarm == eggCapacity) {
-                throw new FarmException("You can't buy any more eggs, the farm has reached the limit!");
-            }
-
             farmService.buyEgg(farmId);
             model.addAttribute("success_message", "You just bought an egg!");
         } catch(FarmException exc){
@@ -91,9 +69,6 @@ public class FarmRestController {
     @DeleteMapping("/chickens")
     public String sellChicken(Model model){
         try {
-            if (farmService.chickenStock() == 0) {
-                throw new FarmException("You don't have any chickens to sell!");
-            }
             farmService.sellChicken(farmId);
             model.addAttribute("success_message", "You just sold a chicken!");
         } catch (FarmException exc){
@@ -105,11 +80,8 @@ public class FarmRestController {
     @DeleteMapping("/eggs")
     public String sellEgg(Model model){
         try{
-        if (farmService.eggStock() == 0) {
-            throw new FarmException("You don't have any eggs to sell!");
-        }
-        farmService.sellEgg(farmId);
-        model.addAttribute("success_message", "You just sold an egg!");
+            farmService.sellEgg(farmId);
+            model.addAttribute("success_message", "You just sold an egg!");
         } catch (FarmException exc){
             model.addAttribute("error_message", exc.getMessage());
         }
