@@ -2,11 +2,12 @@ package com.ggonzalez.farmtest.service;
 
 import com.ggonzalez.farmtest.entity.Chicken;
 import com.ggonzalez.farmtest.entity.Egg;
+import com.ggonzalez.farmtest.entity.Farm;
 
 import java.util.Map;
 
 public interface FarmService {
-    int createFarm(int money, int eggLimit, int chickenLimit, int eggValue, int chickenValue);
+    Farm createFarm(int money, int eggLimit, int chickenLimit, int eggValue, int chickenValue);
     int moneyAvailable(int farmId);
     void substractMoney(int farmId, int anAmountOfMoney);
     void addMoney(int farmId, int anAmountOfMoney);

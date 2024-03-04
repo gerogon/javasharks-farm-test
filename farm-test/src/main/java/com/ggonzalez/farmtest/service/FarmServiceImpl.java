@@ -5,6 +5,7 @@ import com.ggonzalez.farmtest.repository.FarmRepository;
 import com.ggonzalez.farmtest.entity.Chicken;
 import com.ggonzalez.farmtest.entity.Egg;
 import com.ggonzalez.farmtest.entity.Farm;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +27,9 @@ public class FarmServiceImpl implements FarmService{
     }
 
     @Override
-    public int createFarm(int money, int eggLimit, int chickenLimit, int eggValue, int chickenValue) {
+    public Farm createFarm(int money, int eggLimit, int chickenLimit, int eggValue, int chickenValue) {
         Farm farm = new Farm(money, eggLimit, chickenLimit, eggValue, chickenValue);
-        farmRepository.save(farm);
-        return farm.getId();
+        return farmRepository.save(farm);
     }
 
     @Override

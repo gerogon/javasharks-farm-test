@@ -68,6 +68,9 @@ public class Farm {
         return chickenPrice;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public void addMoney(int anAmountOfMoney){
         this.money = money + anAmountOfMoney;
     }

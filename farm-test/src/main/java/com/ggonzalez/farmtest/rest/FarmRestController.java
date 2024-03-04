@@ -32,7 +32,7 @@ public class FarmRestController {
     @PostMapping("/farm")
     public String createFarm(Model model){
         if (farmId == 0){
-        farmId = farmService.createFarm(100, 20, 10, 5, 15);
+            farmId = farmService.createFarm(100, 20, 10, 5, 15).getId();
         } else {
             model.addAttribute("error_message", "You already created the farm!");
         }
